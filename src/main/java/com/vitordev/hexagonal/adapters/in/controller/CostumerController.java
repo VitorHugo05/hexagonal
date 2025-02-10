@@ -5,6 +5,7 @@ import com.vitordev.hexagonal.adapters.in.controller.request.CustomerRequest;
 import com.vitordev.hexagonal.adapters.in.controller.response.CustomerResponse;
 import com.vitordev.hexagonal.adapters.out.FindCustomerByIdAdapter;
 import com.vitordev.hexagonal.application.core.domain.Customer;
+import com.vitordev.hexagonal.application.ports.in.DeleteCustomerByIdInputPort;
 import com.vitordev.hexagonal.application.ports.in.FindCustomerByIdInputPort;
 import com.vitordev.hexagonal.application.ports.in.InsertCustomerInputPort;
 import com.vitordev.hexagonal.application.ports.in.UpdateCustomerInputPort;
@@ -28,6 +29,9 @@ public class CostumerController {
     private UpdateCustomerInputPort updateCustomerInputPort;
 
     @Autowired
+    private DeleteCustomerByIdInputPort deleteCustomerByIdInputPort;
+
+    @Autowired
     private CustomerMapper customerMapper;
 
     @PostMapping
@@ -49,6 +53,12 @@ public class CostumerController {
         Customer customer = customerMapper.toCostumer(request);
         customer.setId(id);
         updateCustomerInputPort.update(customer, request.getZipCode());
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable final String id) {
+        deleteCustomerByIdInputPort.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
