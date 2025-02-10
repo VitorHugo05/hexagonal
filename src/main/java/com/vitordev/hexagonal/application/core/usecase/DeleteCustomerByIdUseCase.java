@@ -1,11 +1,14 @@
 package com.vitordev.hexagonal.application.core.usecase;
 
 
+import com.vitordev.hexagonal.application.ports.in.DeleteCustomerByIdInputPort;
 import com.vitordev.hexagonal.application.ports.in.FindCustomerByIdInputPort;
 import com.vitordev.hexagonal.application.ports.out.DeleteCustomerByIdOutputPort;
 
-public class DeleteCustomerByIdUseCase implements DeleteCustomerByIdOutputPort {
+public class DeleteCustomerByIdUseCase implements DeleteCustomerByIdInputPort {
+
     private final FindCustomerByIdInputPort findCustomerByIdInputPort;
+
     private final DeleteCustomerByIdOutputPort deleteCustomerByIdOutputPort;
 
     public DeleteCustomerByIdUseCase(
@@ -17,8 +20,9 @@ public class DeleteCustomerByIdUseCase implements DeleteCustomerByIdOutputPort {
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(final String id) {
         findCustomerByIdInputPort.find(id);
         deleteCustomerByIdOutputPort.delete(id);
     }
+
 }

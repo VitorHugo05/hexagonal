@@ -15,4 +15,5 @@ public class DeleteCustomerByIdAdapter implements DeleteCustomerByIdOutputPort {
     public void delete(String id) {
         customerRepository.deleteById(id);
     }
+
 }
